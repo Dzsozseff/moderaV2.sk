@@ -1,0 +1,411 @@
+# https://github.com/Dzsozseff
+# made by: joci12_
+# v1.1
+
+on script load:
+    send "&c&l[modera]&l&c &abetöltése..." to console
+
+options:
+    noperm: &cEhhez a parancshoz nincs jogod!
+    noplayername: &cAdj meg egy játékosnevet!
+    notbanned: &cEz a játékos nincs kitiltva!
+    ban: &7[&7&c&lBAN&l&c&7]&7
+    kick: &7[&7&c&lKICK&l&c&7]&7
+    unban: &7[&7&c&lUNBAN&l&c&7]&7
+    warn: &7[&7&c&lWARN&l&c&7]&7
+    mute: &7[&7&c&lMUTE&l&c&7]&7
+    tempban: &7[&7&c&lTEMPBAN&l&c&7]&7
+    tempmute: &7[&7&c&lTEMPMUTE&l&c&7]&7
+    
+command /modera [<text>] [<player>] [<text>]:
+  permission: modera.modera
+  permission message: {@noperm}
+
+  trigger:
+    if arg-1 is "ban":
+      execute player command "ban %arg-2%"
+      stop
+
+    if arg-1 is "unban":
+      execute player command "unban %arg-2%"
+
+    if arg-1 is "kick":
+      execute player command "kick %arg-2%"
+      stop
+
+    if arg-1 is "warn":
+      execute player command "warn %arg-2%"
+      stop
+
+    if arg-1 is "mute":
+      execute player command "mute %arg-2%"
+      stop
+
+    if arg-1 is "unmute":
+      execute player command "unmute %arg-2%"
+      stop
+
+    if arg-1 is "silentmute":
+      execute player command "silentmute %arg-2%"
+      stop
+      
+    if arg-1 is "silentunmute":
+      execute player command "silentunmute %arg-2%"
+      stop
+
+    if arg-1 is "silentban":
+      execute player command "silentban %arg-2%"
+      stop
+
+    if arg-1 is "silentunban":
+      execute player command "silentunban %arg-2%"
+
+    if arg-1 is "history":
+      execute player command "history %arg-2%"
+      stop
+
+    if arg-1 is "clearhistory":
+      execute player command "clearhistory %arg-2%"
+      stop
+      
+    if arg-1 is "help":
+      send ""
+      send "Parancsok:"
+      send ""
+      send "/ban <játékosnév> <indok> &7[Kitiltja a megadott játékost.]"
+      send "/unban <játékosnév> <indok> &7[Feloldja a megadott játékos tiltását.]"
+      send "/kick <játékosnév> <indok> &7[Kirúgja a megadott játékost.]"
+      send "/warn <játékosnév> <indok> &7[Figyelmezteti a megadott játékost.]"
+      send "/mute <játékosnév> <indok> &7[Lenémítsa a megadott játékost.]"
+      send "/unmute <játékosnév> &7[Feloldja a megadott játékos némítását.]"
+      send "/silentban <játékosnév> <indok> &7[Jelzés nélkül kitiltja a megadott játékost]"
+      send "/silentunban <játékosnév> <indok> &7[Jelzés nélkül feloldja a megadott játékos tiltását]"
+      send "/silentmute <játékosnév> <indok> &7[Jelzés nélkül némítja a megadott játékost.]"
+      send "silentunmute <játékosnév> &7[Jelzés nélkül feloldja a megadott játékos némítását.]"
+      send "/history <játékosnév> &7[Megmutatja a megadott játékos előzményeit.]"
+      send "/clearhistory <játékosnév> &7[Törli a megadott játékos előzményeit.]"
+      send "/modera update"
+      send "/modera help"
+      send "/modera version"
+      send "/modera"
+      stop
+
+    if arg-1 is not set:
+      send "    &c&l[modera]"
+      send "         V1.1"
+      send ""
+      send "  Made by: joci12_"
+      send "   /modera help"
+
+    if arg-1 is "update":
+      send "Frissítések keresése..."
+      wait 2 seconds
+      send "&aA legújabb &c&l[modera]&l&c &averzió fut a szerveren!"
+
+    if arg-1 is "version":
+      send "A jelenlegi &c&l[modera]&l&c &fverzió: &lV1.1"
+
+    if arg-1 is "reload":
+      send "&c&l[modera]&l&c &fújratöltése..."
+      execute player command "sk reload moderaV1.1.sk"
+      send "&c&l[modera]&l&c &aújratöltve!"
+
+command /ban [<player>] [<text>]:
+  permission: modera.ban
+  permission message: {@noperm}
+
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+      
+    if arg-2 is not set:
+      add "[%now%] {@ban} &7by &f%player%&7: %arg-2%" to {history::%arg-1%::*}
+      execute console command "minecraft:ban %arg-1% &c%player%&c &fkitiltott téged! %newline% &fIndok: &c%arg-2%"
+      broadcast "{@ban} &c%player%&c &fkitiltotta &c%arg-1%&c &fjátékost!"
+      stop
+
+    execute console command "minecraft:ban %arg-1% &c%player%&c &fkitiltott téged! %newline% &fIndok: &c%arg-2%"
+    broadcast "{@ban} &c%player%&c &fkitiltotta &c%arg-1%&c &fjátékost! Indok: &c%arg-2%"
+    add "[%now%] {@ban} &7by &f%player%&7: %arg-2%" to {history::%arg-1%::*}
+        
+command /unban [<offline player>]:
+  permission: modera.unban
+  permission message: {@noperm}
+
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+
+    if arg-1 is banned:
+      broadcast "&7[&7&c&lUNBAN&l&c&7]&7 &c%player%&c &ffeloldotta &c%arg-1%&c &ftiltását!"
+      execute console command "/minecraft:pardon %arg-1%"
+      set {banned::%arg-1%} to false
+
+    else:
+      send "{@notbanned}"
+
+command /kick [<player>] [<text>]:
+  permission: modera.kick
+  permission message: {@noperm}
+
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+
+    if arg-2 is not set:
+      add "[%now%] {@kick} &7by &f%player%&7: %arg-2%" to {history::%arg-1%::*}
+      broadcast "{@kick} &c%player% &fkirúgta &c%arg-1%&c &fjátékost!"
+      execute console command "minecraft:kick %arg-1% &c%player%&c &fkirúgott téged!"
+      stop
+
+    execute console command "minecraft:kick %arg-1% &c%player%&c &fkirúgott téged! %newline% &fIndok: &c%arg-2%"
+    broadcast "{@kick} &c%player% &fkirúgta &c%arg-1%&c &fjátékost! Indok: &c%arg-2%"
+    add "[%now%] {@kick} &7by &f%player%&7: %arg-2%" to {history::%arg-1%::*}
+    
+command /warn [<player>] [<text>]:
+  permission: modera.warn
+  permission message: {@noperm}
+
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+
+    if arg-2 is not set:
+      add "[%now%] {@warn} &7by &f%player%&7: %arg-2%" to {history::%arg-1%::*}
+      broadcast "{@warn} &c%player%&c &ffigyelmeztette &c%arg-1%&c &fjátékost!"
+      stop
+
+    broadcast "{@warn} &c%player%&c &ffigyelmeztette &c%arg-1%&c &fjátékost! Indok: &c%arg-2%"
+    add "[%now%] {@warn} &7by &f%player%&7: %arg-2%" to {history::%arg-1%::*}
+
+command /silentban [<player>] [<text>]:
+  permission: modera.silentban
+  permission message: {@noperm}
+
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+
+    if arg-2 is not set:
+      execute player command "minecraft:ban %arg-1% &c%player%&c &fkitiltott téged!"
+      add "[%now%] &cSILENTBAN &7by &f%player%&7: %arg-2%" to {history::%arg-1%::*}
+      stop
+
+    execute console command "minecraft:ban %arg-1% &c%player%&c &fkitiltott téged! %newline% &fIndok:&f &c%arg-2%"
+
+command /silentunban [<offline player>]:
+  permission: modera.silentunban
+  permission message: {@noperm}
+
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+
+    if arg-1 is banned:
+      send "&aFeloldottad %arg-1% tiltását!"
+
+    else:
+      send "&cEz a játékos nincs kitiltva!"
+
+command /history <offline player>:
+    permission: modera.history
+    permission message: {@noperm}
+    trigger:
+        if arg-1 is not set:
+            send "{@noplayername}"
+            stop
+
+        if {history::%arg-1%::*} is not set:
+            send "&e%arg-1% &7játékosnak nincsenek büntetési előzményei."
+            stop
+
+        send "&7&m================&r &c%arg-1% Előzményei &7&m================"
+        
+        loop {history::%arg-1%::*}:
+            send "&7- %loop-value%"
+            
+        send "&7&m================================================"
+
+command /clearhistory <offline player>:
+    permission: modera.clearhistory
+    permission message: {@noperm}
+    trigger:
+        if arg-1 is not set:
+            send "{@noplayername}"
+            stop
+
+        clear {history::%arg-1%::*}
+        send "&aSikeresen törölted &e%arg-1% &aösszes előzményét!"
+
+command /mute [<offline player>] [<text>]:
+  permission: modera.mute
+  permission message: {@noperm}
+  
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+
+    if arg-2 is not set:
+      set {muteplayer::%arg-1%} to true
+      broadcast "&7[&7&c&lMUTE&l&c&7]&7 &c%player%&c &fLenémította &c%arg-1%&c &fjátékost!"
+      add "[%now%] {@mute} &7by &f%player%&7" to {history::%arg-1%::*}
+      stop
+
+    set {muteplayer::%arg-1%} to true
+    broadcast "{@mute} &c%player%&c &fLenémította &c%arg-1%&c &fjátékost! Indok: &c%arg-2%"
+    add "[%now%] {@mute} &7by &f%player%&7: %arg-2%" to {history::%arg-1%::*}
+
+on chat:
+  if {muteplayer::%player%} is true:
+    send "&cLe vagy némítva!&c"
+    cancel event
+
+command /unmute [<offline player>]:
+  permission: modera.unmute
+  permission message: {@noperm}
+  
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+
+    if {muteplayer::%arg-1%} is true:
+      set {muteplayer::%arg-1%} to false
+      broadcast "&7[&7&c&lUNMUTE&l&c&7]&7 &c%player%&c &ffeloldotta &c%arg-1%&c &fnémítását!"
+
+command /silentmute [<offline player>] [<text>]:
+  permission: modera.silentmute
+  permission message: {@noperm}
+  
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+
+    if arg-2 is not set:
+      set {muteplayer::%arg-1%} to true
+      add "[%now%] &cSILENTMUTE &7by &f%player%&7" to {history::%arg-1%::*}
+      send "&aLenémítottad&a &c%arg-1%&c &ajátékost!"
+      stop
+
+    set {muteplayer::%arg-1%} to true
+    add "[%now%] &cSILENTMUTE &7by &f%player%&7" to {history::%arg-1%::*}
+
+on chat:
+  if {silentmuteplayer::%player%} is true:
+    send "&cLe vagy némítva!&c"
+    cancel event
+
+command /silentunmute [<offline player>]:
+  permission: modera.unmute
+  permission message: {@noperm}
+  
+  trigger:
+    if arg-1 is not set:
+      send "{@noplayername}"
+      stop
+
+    if {muteplayer::%arg-1%} is true:
+      set {muteplayer::%arg-1%} to false
+      send "&aFeloldottad&a &c%arg-1%&c &ajátékos némítását!"
+
+command /tempmute [<offline player>] [<timespan>] [<text>]:
+    permission: modera.tempmute
+    permission message: {@noperm}
+    
+    trigger:
+        if arg-1 is not set:
+            send "{@noplayername}"
+            stop
+
+        if arg-2 is not set:
+            send "&cMeg kell adnod egy időtartamot! (pl. 10m, 2h, 1d)"
+            stop
+
+        set {muteplayer::%arg-1%} to true
+        set {tempmute_expire::%arg-1%} to now
+        add arg-2 to {tempmute_expire::%arg-1%}
+
+        if arg-3 is set:
+            set {_reason} to " Indok: &c%arg-3%&c"
+            add "[%now%] &cTEMPMUTE &7by &f%player%&7 (%arg-2%) - %arg-3%" to {history::%arg-1%::*}
+        else:
+            set {_reason} to ""
+            add "[%now%] &cTEMPMUTE &7by &f%player%&7 (%arg-2%)" to {history::%arg-1%::*}
+
+        broadcast "{@tempmute} &c%player% &fLenémította &c%arg-1% &fjátékost!%{_reason}% &fEnnyi időre: &c%arg-2%"
+
+on chat:
+    if {muteplayer::%player%} is true:
+        if {tempmute_expire::%player%} is set:
+            if now is less than {tempmute_expire::%player%}:
+                clear recipients
+                set {_rem} to difference between {tempmute_expire::%player%} and now
+                send "&cLe vagy némítva! Még hátravan: &e%{_rem}%" to player
+                cancel event
+            else:
+                delete {muteplayer::%player%}
+                delete {tempmute_expire::%player%}
+        else:
+            clear recipients
+            send "&cLe vagy némítva!" to player
+            cancel event
+
+command /tempban [<offline player>] [<timespan>] [<text>]:
+    permission: modera.tempban
+    permission message: {@noperm}
+
+    trigger:
+        if arg-1 is not set:
+            send "{@noplayername}"
+            stop
+
+        if arg-2 is not set:
+            send "&cMeg kell adnod egy időtartamot! (pl. 1d, 7d, 12h)"
+            stop
+
+        set {tempbanned::%arg-1%} to true
+        set {tempban_expire::%arg-1%} to now
+        add arg-2 to {tempban_expire::%arg-1%}
+
+        if arg-3 is set:
+            set {tempban_reason::%arg-1%} to arg-3
+            set {_reason_msg} to " Indok: &c%arg-3%&c"
+            set {_kick_reason} to "%nl%&7Indok: &c%arg-3%"
+            add "[%now%] &cTEMPBAN &7by &f%player%&7 (%arg-2%) - %arg-3%" to {history::%arg-1%::*}
+        else:
+            delete {tempban_reason::%arg-1%}
+            set {_reason_msg} to ""
+            set {_kick_reason} to ""
+            add "[%now%] &cTEMPBAN &7by &f%player%&7 (%arg-2%)" to {history::%arg-1%::*}
+
+        broadcast "{@tempban} &c%player% &fKitiltotta &c%arg-1% &fjátékost!%{_reason_msg}% &fEnnyi időre: &c%arg-2%"
+
+        if arg-1 is online:
+            kick arg-1 due to "&cIdeiglenesen ki lettél tiltva!%{_kick_reason}%%nl%&7Hátralévő idő: &e%arg-2%"
+
+on connect:
+    if {tempbanned::%player%} is true:
+        if now is less than {tempban_expire::%player%}:
+            set {_rem} to difference between {tempban_expire::%player%} and now
+            
+            if {tempban_reason::%player%} is set:
+                set {_kick_reason} to "%nl%&7Indok: &c%{tempban_reason::%player%}%"
+            else:
+                set {_kick_reason} to ""
+                
+            kick player due to "&cKi vagy tiltva a szerverről!%{_kick_reason}%%nl%&7Hátralévő idő: &e%{_rem}%"
+        else:
+            delete {tempbanned::%player%}
+            delete {tempban_expire::%player%}
+            delete {tempban_reason::%player%}
+
+on script load:
+    send "&c&l[modera]&l&c &asikeresen betölött!" to console
