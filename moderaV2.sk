@@ -1,6 +1,6 @@
 # https://github.com/Dzsozseff
 # made by: joci12_
-# v1.1
+# v2
 
 on script load:
     send "&c&l[modera]&l&c &abetöltése..." to console
