@@ -1,6 +1,6 @@
 # https://github.com/Dzsozseff
 # made by: joci12_
-# v2
+# v1.1
 
 on script load:
     send "&c&l[modera]&l&c &abetöltése..." to console
@@ -78,6 +78,8 @@ command /modera [<text>] [<player>] [<text>]:
       send "/warn <játékosnév> <indok> &7[Figyelmezteti a megadott játékost.]"
       send "/mute <játékosnév> <indok> &7[Lenémítsa a megadott játékost.]"
       send "/unmute <játékosnév> &7[Feloldja a megadott játékos némítását.]"
+      send "/tempmute <játékosnév> <indok> &7[Ideiglenesen lenémítja a megadott játékost.]"
+      send "/tempban <játékosnév> <indok> &7[Ideiglenesen kitiltja a megadott játékost.]"
       send "/silentban <játékosnév> <indok> &7[Jelzés nélkül kitiltja a megadott játékost]"
       send "/silentunban <játékosnév> <indok> &7[Jelzés nélkül feloldja a megadott játékos tiltását]"
       send "/silentmute <játékosnév> <indok> &7[Jelzés nélkül némítja a megadott játékost.]"
@@ -103,11 +105,11 @@ command /modera [<text>] [<player>] [<text>]:
       send "&aA legújabb &c&l[modera]&l&c &averzió fut a szerveren!"
 
     if arg-1 is "version":
-      send "A jelenlegi &c&l[modera]&l&c &fverzió: &lV2"
+      send "A jelenlegi &c&l[modera]&l&c &fverzió: &lV1.1"
 
     if arg-1 is "reload":
       send "&c&l[modera]&l&c &fújratöltése..."
-      execute player command "sk reload moderaV2.sk"
+      execute player command "sk reload moderaV1.1.sk"
       send "&c&l[modera]&l&c &aújratöltve!"
 
 command /ban [<player>] [<text>]:
