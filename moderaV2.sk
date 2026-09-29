@@ -1,6 +1,6 @@
 # https://github.com/Dzsozseff
 # made by: joci12_
-# v1.1
+# v2
 
 on script load:
     send "&c&l[modera]&l&c &abetöltése..." to console
@@ -92,7 +92,7 @@ command /modera [<text>] [<player>] [<text>]:
 
     if arg-1 is not set:
       send "    &c&l[modera]"
-      send "         V1.1"
+      send "         V2"
       send ""
       send "  Made by: joci12_"
       send "   /modera help"
@@ -103,11 +103,11 @@ command /modera [<text>] [<player>] [<text>]:
       send "&aA legújabb &c&l[modera]&l&c &averzió fut a szerveren!"
 
     if arg-1 is "version":
-      send "A jelenlegi &c&l[modera]&l&c &fverzió: &lV1.1"
+      send "A jelenlegi &c&l[modera]&l&c &fverzió: &lV2"
 
     if arg-1 is "reload":
       send "&c&l[modera]&l&c &fújratöltése..."
-      execute player command "sk reload moderaV1.1.sk"
+      execute player command "sk reload moderaV2.sk"
       send "&c&l[modera]&l&c &aújratöltve!"
 
 command /ban [<player>] [<text>]:
