@@ -105,11 +105,11 @@ command /modera [<text>] [<player>] [<text>]:
       send "&aA legújabb &c&l[modera]&l&c &averzió fut a szerveren!"
 
     if arg-1 is "version":
-      send "A jelenlegi &c&l[modera]&l&c &fverzió: &lV1.1"
+      send "A jelenlegi &c&l[modera]&l&c &fverzió: &lV2"
 
     if arg-1 is "reload":
       send "&c&l[modera]&l&c &fújratöltése..."
-      execute player command "sk reload moderaV1.1.sk"
+      execute player command "sk reload moderaV2.sk"
       send "&c&l[modera]&l&c &aújratöltve!"
 
 command /ban [<player>] [<text>]:
